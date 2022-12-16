@@ -16,7 +16,7 @@ services:
       WORDPRESS_DATABASE_HOST: mariadb
       WORDPRESS_DATABASE_USER: bn_wordpress
       WORDPRESS_DATABASE_NAME: bitnami_wordpress
-      WORDPRESS_DATABASE_PASSWORD: P@r0la1324
+      WORDPRESS_DATABASE_PASSWORD: your password
 
   mariadb:
     image: bitnami/mariadb:latest
@@ -29,8 +29,8 @@ services:
       #ALLOW_EMPTY_PASSWORD: yes 
       MARIADB_USER: bn_wordpress 
       MARIADB_DATABASE: bitnami_wordpress
-      MARIADB_PASSWORD: P@r0la1324
-      MARIADB_ROOT_PASSWORD: P@r0la1324
+      MARIADB_PASSWORD: your password
+      MARIADB_ROOT_PASSWORD: your password
 
   db_backup:
     image: databack/mysql-backup
@@ -41,7 +41,7 @@ services:
      #- ALLOW_EMPTY_PASSWORD=yes
      - DB_DUMP_TARGET=/db
      - DB_USER=bn_wordpress
-     - DB_PASS=P@r0la1324
+     - DB_PASS=your password
      #- DB_DUMP_FREQ=1
      - DB_DUMP_BEGIN=2330
      - DB_SERVER=mariadb
