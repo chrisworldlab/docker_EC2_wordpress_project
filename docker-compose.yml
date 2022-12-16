@@ -1,0 +1,54 @@
+services:
+
+  wordpress:
+    image: bitnami/wordpress:latest
+    restart: always
+    ports:
+      - '80:8080'
+      - '443:8443'
+    volumes:
+      - "./wordpress:/bitnami/wordpress"
+    networks:
+      - wordpress-network
+    environment:
+      #ALLOW_EMPTY_PASSWORD: yes
+      WORDPRESS_DATABASE_PORT_NUMBER: 3306
+      WORDPRESS_DATABASE_HOST: mariadb
+      WORDPRESS_DATABASE_USER: bn_wordpress
+      WORDPRESS_DATABASE_NAME: bitnami_wordpress
+      WORDPRESS_DATABASE_PASSWORD: P@r0la1324
+
+  mariadb:
+    image: bitnami/mariadb:latest
+    restart: always
+    volumes:
+      - "./mariadb:/bitnami/mariadb"
+    networks:
+      - wordpress-network
+    environment:
+      #ALLOW_EMPTY_PASSWORD: yes 
+      MARIADB_USER: bn_wordpress 
+      MARIADB_DATABASE: bitnami_wordpress
+      MARIADB_PASSWORD: P@r0la1324
+      MARIADB_ROOT_PASSWORD: P@r0la1324
+
+  db_backup:
+    image: databack/mysql-backup
+    restart: always
+    volumes:
+     - ./db_backup:/db
+    environment:
+     #- ALLOW_EMPTY_PASSWORD=yes
+     - DB_DUMP_TARGET=/db
+     - DB_USER=bn_wordpress
+     - DB_PASS=P@r0la1324
+     #- DB_DUMP_FREQ=1
+     - DB_DUMP_BEGIN=2330
+     - DB_SERVER=mariadb
+     - DB_DUMP_CRON=0 6 * * *
+    networks:
+      -  wordpress-network
+  
+
+networks:
+  wordpress-network:
